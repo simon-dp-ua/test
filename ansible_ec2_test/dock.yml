@@ -1,0 +1,43 @@
+---
+- hosts: webserver
+  gather_facts: no
+  remote_user: ec2-user
+  become: yes
+
+
+
+
+
+
+  tasks:
+
+  - name: Docker nginx start
+    shell: docker run --cidfile id -d -p 80:80 nginx
+    become: yes
+
+  - name: Create file Hello World
+    shell: echo "Hello World!" >> /home/ec2-user/index.html
+
+  - name: Hello Docker
+    shell: id=$(<id) && docker cp /home/ec2-user/index.html "$id":/usr/share/nginx/html/
+    become: yes
+
+
+#- name: Add repo test
+#  shell: git remote add test git@github.com:simon-dp-ua/test.git
+
+#- name: config email
+#  shell: git config --global user.email "simon@simon.dp.ua"
+
+#- name: config name
+#  shell: git config --global user.name "Simon"
+
+#- name: Add path
+#  shell: git add .
+
+#- name: git commit
+#  shell: git commit -m 'root commit'
+
+#- name: git commit
+#  shell: git push -u test master
+

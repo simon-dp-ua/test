@@ -1,0 +1,20 @@
+region: us-east-2
+instance_type: t2.micro
+ami: ami-0d8f6eb4f641ef691
+project_name: simon
+env: test
+app_code_user: "simon"
+hoststring: "ansible_ssh_user=ec2-user ansible_ssh_private_key_file=../simon-test-key.pem"
+hostpath: "../hosts"
+
+packages1     :
+               - python-pip
+               - yum-utils
+               - device-mapper-persistent-data
+               - lvm2
+               
+packages2     :
+               - boto
+               - boto3
+               - docker-compose
+docker_id     :  cat "$id"

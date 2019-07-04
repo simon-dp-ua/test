@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  gather_facts: no
+  remote_user: ec2-user
+  become: yes
+
+  tasks:
+
+
+  - name: Add repo test
+    shell: git remote add test git@github.com:simon-dp-ua/test.git
+
+  - name: config email
+    shell: git config --global user.email "simon@simon.dp.ua"
+
+  - name: config name
+    shell: git config --global user.name "Simon"
+
+  - name: Add path
+    shell: git add /home/ec2-user/1/
+
+  - name: git commit
+    shell: git commit -m 'root commit v1.0'
+
+  - name: git commit
+    shell: git push -u test master

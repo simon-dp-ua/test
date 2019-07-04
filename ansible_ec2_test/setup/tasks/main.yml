@@ -1,0 +1,95 @@
+---
+
+- name: Create user
+  user: name=simon shell=/bin/bash home=/home/simon groups=adm,wheel generate_ssh_key=yes ssh_key_bits=2048
+  become: yes
+
+- name: Update all packages
+  yum:
+    name: '*'
+    state: latest
+    update_only: yes
+   
+- name: install pip
+  become: yes
+  shell: yum -y install python-pip
+
+- name: install yum-utils
+  become: yes
+  shell: yum -y install yum-utils
+
+- name: install device-mapper-persistent-data
+  become: yes
+  shell: yum -y install device-mapper-persistent-data
+
+- name: install lvm2
+  become: yes
+  shell: yum -y install lvm2
+
+
+- name: Add extras repository
+  become: yes
+  shell: yum-config-manager --enable extras
+
+- name: Install docker via amazon-linux-extras packages
+  shell: "amazon-linux-extras install docker=18.06.1 -y"
+
+- name: Enable Docker service at startup
+  become: yes
+  service:
+        name: docker
+        state: started
+        enabled: yes
+
+- name: install boto
+  become: yes
+  shell: pip install boto
+  become: yes
+
+- name: install boto3
+  become: yes
+  shell: pip install boto3
+  become: yes
+
+
+- name: install docker-compose
+  become: yes
+  shell: pip install docker-compose
+  become: yes
+
+
+- name: pull Docker nginx
+  command : docker pull nginx
+  become: yes
+ 
+
+- name: Docker nginx start
+  shell: docker run --cidfile id -d -p 80:80 nginx
+  become: yes
+
+- name: Create file Hello World
+  shell: echo "Hello World!" >> /home/ec2-user/index.html
+
+- name: Hello Docker
+  shell: id=$(<id) && docker cp /home/ec2-user/index.html "$id":/usr/share/nginx/html/
+  become: yes
+
+
+#- name: Add repo test
+#  shell: git remote add test git@github.com:simon-dp-ua/test.git
+
+#- name: config email
+#  shell: git config --global user.email "simon@simon.dp.ua"
+
+#- name: config name
+#  shell: git config --global user.name "Simon"
+
+#- name: Add path
+#  shell: git add .
+
+#- name: git commit
+#  shell: git commit -m 'root commit'
+
+#- name: git commit
+#  shell: git push -u test master
+

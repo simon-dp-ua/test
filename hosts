@@ -1,0 +1,9 @@
+[local]
+localhost ansible_ssh_user=ec2-user ansible_ssh_private_key_file=/home/ec2-user/.ssh/1.pem
+
+[webserver]
+18.224.73.23 ansible_ssh_user=ec2-user ansible_ssh_private_key_file=../simon-test-key.pem
+3.16.83.49 ansible_ssh_user=ec2-user ansible_ssh_private_key_file=../simon-test-key.pem
+18.191.130.3 ansible_ssh_user=ec2-user ansible_ssh_private_key_file=../simon-test-key.pem
+18.188.76.223 ansible_ssh_user=ec2-user ansible_ssh_private_key_file=../simon-test-key.pem
+3.17.78.32 ansible_ssh_user=ec2-user ansible_ssh_private_key_file=../simon-test-key.pem
